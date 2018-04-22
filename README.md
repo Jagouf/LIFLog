@@ -9,7 +9,7 @@ https://github.com/Jagouf/LIFLog/releases/
 - Téléchargez et décompressés l'archive téléchargée dans un répertoire de votre choix,
 - Lancez l'exécutable, 
 *L'exécutable n'étant pas signé, un avertissement pourra vous être présenté. Ne récupérez cet exécutable que sur ce profil GitHub*
-- Sélectionnez un répertoire de logs (ex : <gamefolder>/game/eu/logs/)
+- Sélectionnez un répertoire de logs (ex : `<gamefolder>`/game/eu/logs/)
 - Sélectionnez les fichiers qui vous intéressent et lancez l'analyse
 - Dans l'onglet qui s'ouvre, sélectionnez les lignes dont vous voulez voir apparaitre les statistiques de dégâts
 ## Remerciement et références
