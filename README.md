@@ -13,7 +13,7 @@ https://github.com/Jagouf/LIFLog/releases/
 - Sélectionnez les fichiers qui vous intéressent et lancez l'analyse
 - Dans l'onglet qui s'ouvre, sélectionnez les lignes dont vous voulez voir apparaitre les statistiques de dégâts
 ## Remerciement et références
-Utilisation des bibliothèques [MahApps.Metro](http://mahapps.com/)
-Utilisation d'éléments fournis dans le [press kit de LIF MMO](https://lifeisfeudal.com/Press-Kits)
-Développé sous Visual Studio 2017 *Community Edition* sous Windows 10 / 64-bit - Version 1709.
-Merci aux testers Le Prince, Rodholf, et Roddik
+- Utilisation des bibliothèques [MahApps.Metro](http://mahapps.com/)
+- Utilisation d'éléments fournis dans le [press kit de LIF MMO](https://lifeisfeudal.com/Press-Kits)
+- Développé sous Visual Studio 2017 *Community Edition* sous Windows 10 / 64-bit - Version 1709.
+- Merci aux testers Le Prince, Rodholf, et Roddik
