@@ -54,7 +54,7 @@
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Name="lblInfo" Text="Version 0.4 by Jagos Silvionor" FontStyle="Italic" />
+                <TextBlock Name="lblInfo" Text="Version 1.0.0-rc.1 by Jagouf" FontStyle="Italic" />
             </StatusBarItem>
         </StatusBar>
         <Grid>

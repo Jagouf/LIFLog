@@ -39,7 +39,7 @@ namespace LIFLog
 
             // folder management, loads files info from saved folder path or ask user for it.
             LoadLogFolder();
-            LoadFolderDetailGridView();
+            
 
         }
 
@@ -147,6 +147,7 @@ namespace LIFLog
                 CurrentFolderTextBox.Text = configurationFolder;
                 folder = configurationFolder;
             }
+            LoadFolderDetailGridView();
 
         }
 
@@ -161,7 +162,7 @@ namespace LIFLog
         private void ChangeLogFolderButton_Click(object sender, RoutedEventArgs e)
         {
             PromptLogFolder();
-            LoadFolderDetailGridView();
+            
             DetailsTabItem.IsEnabled = false;
             FolderTabItem.IsSelected = true;
         }
@@ -212,11 +213,12 @@ namespace LIFLog
                         }
                         break;
                 }
+                if (Directory.Exists(folder)) { 
+                    LoadFolderDetailGridView();
 
-
-
-                Properties.Settings.Default.DefaultFolder = folder;
-                Properties.Settings.Default.Save();
+                    Properties.Settings.Default.DefaultFolder = folder;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
