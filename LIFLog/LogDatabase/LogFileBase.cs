@@ -63,6 +63,10 @@ namespace LIFLog.Classes
                 style = NumberStyles.AllowDecimalPoint;
                 culture = CultureInfo.CreateSpecificCulture("en-US");
 
+                int instanceNum = 0;
+                
+
+
                 string[] separatingChars = { "spop", "spush", "<", ">", "(", ")", "color:C65F5F", "{}", ". Bonus de vitesse : " };
                 int i = 0;
                 DateTime date = DateTime.Now;
@@ -70,6 +74,8 @@ namespace LIFLog.Classes
                 int currentFileNumber = 0;
                 foreach (string filename in filenames)
                 {
+                    String instanceType = "OpenWorld";
+                    String instance = "OpenWorld";
                     FileStream logFileStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     StreamReader logFileReader = new StreamReader(logFileStream);
 
@@ -80,16 +86,44 @@ namespace LIFLog.Classes
                         if (currentline.Contains("cible")) continue;
 
                         String dateLine = "";
+                        if (currentline.Contains("minutes pour vous préparer à la Bataille")){
+                            instanceNum++;
+                            instanceType = "Bataille ";
+                            instance = instanceType + instanceNum;
+                        }
+                        if (currentline.Contains("arène a ouvert ses portes"))
+                        {
+                            instanceNum++;
+                            instanceType = "Arene ";
+                            instance = instanceType + instanceNum;
+                        }
+                        if (currentline.Contains("Leave battle!"))
+                        {
+                            instanceNum++;
+                            instanceType = "OpenWorld";
+                            instance = "OpenWorld";
+                        }
+                        
 
                         if (currentline.Contains("touché"))
                         {
+                            Double damage = 0d;
+                            Double hitConscience= 0d;
                             string[] damageStrimedLine = currentline.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries);
+                            String damageType = damageStrimedLine[9];
+                            String bodyPart = damageStrimedLine[5];
+                            if (damageType == "contondant" || bodyPart == "bouclier")
+                            {
+                                Double.TryParse(damageStrimedLine[7], style, culture, out hitConscience);
+                            }
+                            else {
+                                Double.TryParse(damageStrimedLine[7], style, culture, out damage);
+                            }
+                            int.TryParse(damageStrimedLine[10], out int speed);
+                            String name = damageStrimedLine[3];
+                            
+                            
 
-                            Double.TryParse(damageStrimedLine[5], style, culture, out Double damage);
-                            int.TryParse(damageStrimedLine[8], out int speed);
-                            String name = damageStrimedLine[1];
-                            String bodyPart = damageStrimedLine[3];
-                            String damageType = damageStrimedLine[7];
                             //
 
                             if (!logFileReader.EndOfStream)
@@ -108,7 +142,7 @@ namespace LIFLog.Classes
                                 directionEnum = Hit.DirectionEnum.incoming;
                             }
 
-                            Hit hit = new Hit(i++, date, name, directionEnum, bodyPart, damageType, speed, damage);
+                            Hit hit = new Hit(i++, instance, date, name, directionEnum, bodyPart, damageType, speed, damage, hitConscience);
                             hits.Add(hit);
 
 

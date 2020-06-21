@@ -54,7 +54,7 @@
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
-                <TextBlock Name="lblInfo" Text="Version 1.0.0-rc.1 by Jagouf" FontStyle="Italic" />
+                <TextBlock Name="lblInfo" Text="Version 1.0.1 by Jagouf" FontStyle="Italic" />
             </StatusBarItem>
         </StatusBar>
         <Grid>
@@ -114,21 +114,22 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="225*"/>
                                 <RowDefinition Height="5"/>
-                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="225*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="182*"/>
                                 <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="55*"/>
+                                <ColumnDefinition Width="127*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Text="Détail des dégâts" Grid.Row="0" Grid.ColumnSpan="3" FontSize="{DynamicResource WindowTitleFontSize}"
+                            <TextBlock Text="Détail des dégâts" Grid.Row="0" Grid.ColumnSpan="4" FontSize="{DynamicResource WindowTitleFontSize}"
                        FontFamily="{DynamicResource DefaultFont}"></TextBlock>
-                            <DataGrid x:Name="DetailsGridView" Grid.Row="1" Grid.ColumnSpan="3" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  SelectionChanged="DetailsGridView_SelectionChanged" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid x:Name="DetailsGridView" Grid.Row="1" Grid.ColumnSpan="4" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  SelectionChanged="DetailsGridView_SelectionChanged" AutoGenerateColumns="False" IsReadOnly="True">
                                 <DataGrid.Columns>
 
                                     <DataGridTextColumn Header="Id" Binding="{Binding Ident}"/>
                                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+                                    <DataGridTextColumn Header="Instance" Binding="{Binding Instance}" />
                                     <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -146,14 +147,18 @@
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
                                     <DataGridTextColumn Header="Opposant"  Binding="{Binding Opponent}" />
-                                    
+
                                     <DataGridTextColumn Header="Zone d'impact"  Binding="{Binding BodyPart}" />
                                     <DataGridTemplateColumn Header="Vitesse d'impact" SortMemberPath="ImpactSpeed"  >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Grid>
-                                                    <Rectangle HorizontalAlignment="Left" Fill="LightGray" Width="{Binding ImpactSpeed}" />
-                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding ImpactSpeed}" ></TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Rectangle Grid.Column="1" HorizontalAlignment="Left" Fill="LightGray" Width="{Binding ImpactSpeed}" />
+                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Right" Foreground="#C65F5F" Text="{Binding ImpactSpeed}" ></TextBlock>
                                                 </Grid>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
@@ -163,8 +168,28 @@
                                             <DataTemplate>
 
                                                 <Grid>
-                                                    <Rectangle HorizontalAlignment="Left" Fill="LightGray" Width="{Binding HitPoint}" />
-                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding HitPoint}" ></TextBlock>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Rectangle Grid.Column="1" HorizontalAlignment="Left" Fill="LightGray" Width="{Binding HitPoint}" />
+                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Right" Foreground="#C65F5F" Text="{Binding HitPoint}" ></TextBlock>
+                                                </Grid>
+
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Points de Conscience" SortMemberPath="hitConscience"  >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Rectangle Grid.Column="1" HorizontalAlignment="Left" Fill="LightGray" Width="{Binding HitConscience}" />
+                                                    <TextBlock Grid.Column="0" HorizontalAlignment="Right" Foreground="#C65F5F" Text="{Binding HitConscience}" ></TextBlock>
                                                 </Grid>
 
                                             </DataTemplate>
@@ -175,70 +200,120 @@
                             </DataGrid>
 
 
-                            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Grid.ColumnSpan="3" />
+                            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Grid.ColumnSpan="4" />
 
-                            <TextBlock Text="Statistiques par direction" Grid.Row="3" Grid.Column="0" FontSize="{DynamicResource WindowTitleFontSize}"
-                       FontFamily="{DynamicResource DefaultFont}"></TextBlock>
-                            <DataGrid x:Name="StatisticsGridView" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  AutoGenerateColumns="False"  Grid.Column="0" Grid.Row="4">
-                                <DataGrid.Columns>
+                       
+                            <TabControl Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4">
+                                <TabItem>
+                                    <TabItem.Header>Statistiques par direction</TabItem.Header>
+                                    <TabItem.Content>
+                                        <DataGrid x:Name="StatisticsGridView" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  AutoGenerateColumns="False">
+                                            <DataGrid.Columns>
 
 
-                                    <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
+                                                <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
 
-                                                    <Rectangle Name="imgDirection" ToolTip="{Binding Direction}" Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}">
+                                                                <Rectangle Name="imgDirection" ToolTip="{Binding Direction}" Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}">
 
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Fill" Visual="{Binding Direction, Converter={StaticResource DirectionToImage}}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Fill" Visual="{Binding Direction, Converter={StaticResource DirectionToImage}}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
 
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Tot. de dommages" Binding="{Binding SumHitpoint}" />
-                                    <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinHitpoint}" />
-                                    <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxHitpoint}" />
-                                    <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanHitpoint}" />
-                                    <DataGridTextColumn Header="Min. Vitesse"  Binding="{Binding MinSpeed}" />
-                                    <DataGridTextColumn Header="Max. Vitesse"  Binding="{Binding MaxSpeed}" />
-                                    <DataGridTextColumn Header="Moy. Vitesse"  Binding="{Binding MeanSpeed}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Header="Tot. de dommages" Binding="{Binding SumHitpoint}" />
+                                                <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinHitpoint}" />
+                                                <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxHitpoint}" />
+                                                <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanHitpoint}" />
+                                                <DataGridTextColumn Header="Tot. domm. conscience" Binding="{Binding SumConsciencepoint}" />
+                                                <DataGridTextColumn Header="Min. Vitesse"  Binding="{Binding MinSpeed}" />
+                                                <DataGridTextColumn Header="Max. Vitesse"  Binding="{Binding MaxSpeed}" />
+                                                <DataGridTextColumn Header="Moy. Vitesse"  Binding="{Binding MeanSpeed}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
 
-                            <TextBlock Text="Statistiques par opposant" Grid.Row="3" Grid.Column="2" FontSize="{DynamicResource WindowTitleFontSize}" FontFamily="{DynamicResource DefaultFont}"></TextBlock>
-                            <DataGrid x:Name="AgregationGridView" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AutoGenerateColumns="False" Grid.Column="2" Grid.Row="4">
-                                <DataGrid.Columns>
-                                    <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Grid>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem>
+                                    <TabItem.Header>Statistiques par opposant</TabItem.Header>
+                                    <Grid>
+                                        <DataGrid x:Name="AgregationGridView" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AutoGenerateColumns="False" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2">
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
 
-                                                    <Rectangle Name="imgDirection" ToolTip="{Binding Direction}" Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}">
+                                                                <Rectangle Name="imgDirection" ToolTip="{Binding Direction}" Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}">
 
-                                                        <Rectangle.OpacityMask>
-                                                            <VisualBrush Stretch="Fill" Visual="{Binding Direction, Converter={StaticResource DirectionToImage}}" />
-                                                        </Rectangle.OpacityMask>
-                                                    </Rectangle>
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Fill" Visual="{Binding Direction, Converter={StaticResource DirectionToImage}}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
 
-                                                </Grid>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Opposant" Binding="{Binding Opponent}" />
-                                    
-                                    <DataGridTextColumn Header="Tot. de dommages" Binding="{Binding SumHitpoint}" />
-                                    <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinHitpoint}" />
-                                    <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxHitpoint}" />
-                                    <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanHitpoint}" />
-                                    <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinSpeed}" />
-                                    <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxSpeed}" />
-                                    <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanSpeed}" />
-                                </DataGrid.Columns>
-                            </DataGrid>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Header="Opposant" Binding="{Binding Opponent}" />
+
+                                                <DataGridTextColumn Header="Tot. de dommages" Binding="{Binding SumHitpoint}" />
+                                                <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinHitpoint}" />
+                                                <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxHitpoint}" />
+                                                <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanHitpoint}" />
+                                                <DataGridTextColumn Header="Tot. domm. conscience" Binding="{Binding SumConsciencepoint}" />
+                                                <DataGridTextColumn Header="Min. Vitesse"  Binding="{Binding MinSpeed}" />
+                                                <DataGridTextColumn Header="Max. Vitesse"  Binding="{Binding MaxSpeed}" />
+                                                <DataGridTextColumn Header="Moy. Vitesse"  Binding="{Binding MeanSpeed}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+
+                                    </Grid>
+                                </TabItem>
+                                <TabItem>
+                                    <TabItem.Header>Statistiques par instance</TabItem.Header>
+                                    <Grid>
+                                        <DataGrid x:Name="InstanceGridView" Margin="10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AutoGenerateColumns="False" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2">
+                                            <DataGrid.Columns>
+                                                <DataGridTemplateColumn Header="Direction" SortMemberPath="Direction"  >
+                                                    <DataGridTemplateColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Grid>
+
+                                                                <Rectangle Name="imgDirection" ToolTip="{Binding Direction}" Width="20" Height="20" Fill="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=Foreground}">
+
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Fill" Visual="{Binding Direction, Converter={StaticResource DirectionToImage}}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
+
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </DataGridTemplateColumn.CellTemplate>
+                                                </DataGridTemplateColumn>
+                                                <DataGridTextColumn Header="Instance" Binding="{Binding Instance}" />
+
+                                                <DataGridTextColumn Header="Tot. de dommages" Binding="{Binding SumHitpoint}" />
+                                                <DataGridTextColumn Header="Min. Dommage"  Binding="{Binding MinHitpoint}" />
+                                                <DataGridTextColumn Header="Max. Dommage"  Binding="{Binding MaxHitpoint}" />
+                                                <DataGridTextColumn Header="Moy. Dommage"  Binding="{Binding MeanHitpoint}" />
+                                                <DataGridTextColumn Header="Tot. domm. conscience" Binding="{Binding SumConsciencepoint}" />
+                                                <DataGridTextColumn Header="Min. Vitesse"  Binding="{Binding MinSpeed}" />
+                                                <DataGridTextColumn Header="Max. Vitesse"  Binding="{Binding MaxSpeed}" />
+                                                <DataGridTextColumn Header="Moy. Vitesse"  Binding="{Binding MeanSpeed}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
                         </Grid>
                     </TabItem>
                 </TabControl>

@@ -118,6 +118,7 @@ namespace LIFLog
                     DetailsTabItem.IsEnabled = true;
                     StatisticsGridView.ItemsSource = null;
                     AgregationGridView.ItemsSource = null;
+                    InstanceGridView.ItemsSource = null;
                     DetailsTabItem.IsSelected = true;
                 }
                 else
@@ -240,6 +241,7 @@ namespace LIFLog
                     MinHitpoint = x.Min(z => z.HitPoint),
                     MaxHitpoint = x.Max(z => z.HitPoint),
                     MeanHitpoint = x.Average(z => z.HitPoint),
+                    SumConsciencepoint = x.Sum(z => z.HitConscience),
                     MinSpeed = x.Min(z => z.ImpactSpeed),
                     MaxSpeed = x.Max(z => z.ImpactSpeed),
                     MeanSpeed = x.Average(z => z.ImpactSpeed)
@@ -254,10 +256,26 @@ namespace LIFLog
                     MinHitpoint = x.Min(z => z.HitPoint),
                     MaxHitpoint = x.Max(z => z.HitPoint),
                     MeanHitpoint = x.Average(z => z.HitPoint),
+                    SumConsciencepoint = x.Sum(z => z.HitConscience),
                     MinSpeed = x.Min(z => z.ImpactSpeed),
                     MaxSpeed = x.Max(z => z.ImpactSpeed),
                     MeanSpeed = x.Average(z => z.ImpactSpeed)
                 }).ToList();
+            InstanceGridView.ItemsSource = selectedHits
+               .GroupBy(x => new { x.Instance, x.Direction })
+               .Select(x => new
+               {
+                   Instance = x.Key.Instance,
+                   Direction = x.Key.Direction,
+                   SumHitpoint = x.Sum(z => z.HitPoint),
+                   MinHitpoint = x.Min(z => z.HitPoint),
+                   MaxHitpoint = x.Max(z => z.HitPoint),
+                   MeanHitpoint = x.Average(z => z.HitPoint),
+                   SumConsciencepoint = x.Sum(z => z.HitConscience),
+                   MinSpeed = x.Min(z => z.ImpactSpeed),
+                   MaxSpeed = x.Max(z => z.ImpactSpeed),
+                   MeanSpeed = x.Average(z => z.ImpactSpeed)
+               }).ToList();
         }
         #endregion
 
